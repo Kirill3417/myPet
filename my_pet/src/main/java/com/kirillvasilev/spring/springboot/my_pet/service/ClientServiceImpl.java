@@ -13,8 +13,13 @@ import java.util.Optional;
 
 @Service
 public class ClientServiceImpl implements ClientService {
-    @Autowired
+
     private ClientRepository clientRepository;
+
+    @Autowired
+    public ClientServiceImpl(ClientRepository clientRepository) {
+        this.clientRepository = clientRepository;
+    }
 
     @Override
     public List<Client> getAllClients() {
@@ -29,11 +34,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client getClient(int id) {
-        Client client = null;
-        Optional<Client> optional = clientRepository.findById(id);
-        if (optional.isPresent()) {
-            client = optional.get();
-        }
+        Client client = clientRepository.findById(id).orElseThrow(() -> new RuntimeException());
         return client;
     }
 

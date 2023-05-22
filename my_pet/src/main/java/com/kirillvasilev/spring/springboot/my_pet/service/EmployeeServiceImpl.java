@@ -10,9 +10,12 @@ import java.util.Optional;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-    @Autowired
-    private EmployeeRepository employeeRepository;
 
+    private EmployeeRepository employeeRepository;
+    @Autowired
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
 
     @Override
     public List<Employee> getAllEmployees() {
@@ -26,11 +29,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee getEmployee(int id) {
-        Employee employees = null;
-        Optional<Employee> optional = employeeRepository.findById(id);
-        if(optional.isPresent()){
-            employees = optional.get();
-        }
+        Employee employees = employeeRepository.findById(id).orElseThrow(() -> new RuntimeException());
         return employees;
     }
 
