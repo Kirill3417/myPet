@@ -28,8 +28,7 @@ public class DepartmentServiceImpl implements DepartmentService{
     }
     @Override
     public Department getDepartment(int id) {
-        Department department = departmentRepository.findById(id).orElseThrow(() -> new RuntimeException());
-        return department;
+        return departmentRepository.findById(id).orElseThrow();
     }
 
     @Override
