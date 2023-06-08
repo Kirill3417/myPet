@@ -1,5 +1,6 @@
 package com.kirillvasilev.spring.springboot.my_pet.controller;
 
+import com.kirillvasilev.spring.springboot.my_pet.dto.ClientDto;
 import com.kirillvasilev.spring.springboot.my_pet.entity.Client;
 import com.kirillvasilev.spring.springboot.my_pet.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class ClientController {
     }
 
     @GetMapping("/clients/{id}")
-    public Client getClient(@PathVariable int id){
+    public ClientDto getClient(@PathVariable int id){
         return clientService.getClient(id);
     }
 

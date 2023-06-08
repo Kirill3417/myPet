@@ -14,9 +14,6 @@ public class Department {
     @Column(name = "department_name")
     private String departmentName;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE},
-            mappedBy = "department")
-    private List<Employee> employees;
 
     public Department() {
     }

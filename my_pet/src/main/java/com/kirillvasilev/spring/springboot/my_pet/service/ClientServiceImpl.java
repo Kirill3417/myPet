@@ -1,10 +1,9 @@
 package com.kirillvasilev.spring.springboot.my_pet.service;
 
-
 import com.kirillvasilev.spring.springboot.my_pet.dao.ClientRepository;
-import com.kirillvasilev.spring.springboot.my_pet.dao.DepartmentRepository;
+import com.kirillvasilev.spring.springboot.my_pet.dto.ClientDto;
+import com.kirillvasilev.spring.springboot.my_pet.dto.EmployeeDto;
 import com.kirillvasilev.spring.springboot.my_pet.entity.Client;
-import com.kirillvasilev.spring.springboot.my_pet.entity.Department;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,8 +32,14 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client getClient(int id) {
-        return clientRepository.findById(id).orElseThrow();
+    public ClientDto getClient(int id) {
+        return clientRepository.findById(id)
+                .map(cli -> {
+                    EmployeeDto employeeDto = new EmployeeDto(cli.getEmployee().getId(), cli.getEmployee().getName());
+                    return new ClientDto(cli.getId(), cli.getName(), employeeDto);
+                })
+                .orElseThrow();
+
     }
 
     @Override

@@ -17,9 +17,6 @@ public class Employee {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn(name = "fk_departments")
     private Department department;
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE}
-    , mappedBy = "employee")
-    private List<Client> clients;
 
     public Employee() {
     }
@@ -52,13 +49,6 @@ public class Employee {
         this.department = department;
     }
 
-    public List<Client> getClients() {
-        return clients;
-    }
-
-    public void setClients(List<Client> clients) {
-        this.clients = clients;
-    }
 
     @Override
     public String toString() {
@@ -66,7 +56,6 @@ public class Employee {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", department=" + department +
-                ", clients=" + clients +
                 '}';
     }
 }
