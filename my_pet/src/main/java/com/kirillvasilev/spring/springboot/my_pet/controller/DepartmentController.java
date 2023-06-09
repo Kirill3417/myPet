@@ -1,5 +1,6 @@
 package com.kirillvasilev.spring.springboot.my_pet.controller;
 
+import com.kirillvasilev.spring.springboot.my_pet.dto.DepartmentDto;
 import com.kirillvasilev.spring.springboot.my_pet.entity.Department;
 import com.kirillvasilev.spring.springboot.my_pet.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,12 @@ public class DepartmentController {
     private DepartmentService departmentService;
 
     @GetMapping("/departments")
-    public List<Department> showAllDepartments(){
+    public List<DepartmentDto> showAllDepartments(){
         return departmentService.getAllDepartments();
     }
 
     @GetMapping("/departments/{id}")
-    public Department getDepartment(@PathVariable int id){
+    public DepartmentDto getDepartment(@PathVariable int id){
         return departmentService.getDepartment(id);
     }
 

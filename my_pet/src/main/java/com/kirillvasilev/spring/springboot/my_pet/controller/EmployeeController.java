@@ -1,5 +1,6 @@
 package com.kirillvasilev.spring.springboot.my_pet.controller;
 
+import com.kirillvasilev.spring.springboot.my_pet.dto.EmployeeDto;
 import com.kirillvasilev.spring.springboot.my_pet.entity.Employee;
 import com.kirillvasilev.spring.springboot.my_pet.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,12 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @GetMapping("/employees")
-    public List<Employee> showAllEmployees(){
+    public List<EmployeeDto> showAllEmployees(){
         return employeeService.getAllEmployees();
     }
 
     @GetMapping("/employees/{id}")
-    public Employee getEmployee(@PathVariable int id){
+    public EmployeeDto getEmployee(@PathVariable int id){
         return employeeService.getEmployee(id);
     }
 

@@ -3,13 +3,14 @@ package com.kirillvasilev.spring.springboot.my_pet.service;
 
 
 
+import com.kirillvasilev.spring.springboot.my_pet.dto.EmployeeDto;
 import com.kirillvasilev.spring.springboot.my_pet.entity.Employee;
 
 import java.util.List;
 
 public interface EmployeeService {
-    public List<Employee> getAllEmployees();
+    public List<EmployeeDto> getAllEmployees();
     public void saveEmployee(Employee employee);
-    public Employee getEmployee(int id);
+    public EmployeeDto getEmployee(int id);
     public void deleteEmployee(int id);
 }
