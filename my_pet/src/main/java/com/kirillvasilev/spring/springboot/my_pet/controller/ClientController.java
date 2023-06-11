@@ -54,6 +54,8 @@ public class ClientController {
     public String deleteClient(@PathVariable int id){
         clientService.deleteClient(id);
 
-        return "Client with ID = " + id + " was deleted";
+        return "Client with ID = " + id + " was deleted ghbdtn";
+
     }
+
 }
