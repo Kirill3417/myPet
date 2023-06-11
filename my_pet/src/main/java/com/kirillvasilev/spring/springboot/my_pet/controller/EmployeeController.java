@@ -1,6 +1,7 @@
 package com.kirillvasilev.spring.springboot.my_pet.controller;
 
 import com.kirillvasilev.spring.springboot.my_pet.dto.EmployeeDto;
+import com.kirillvasilev.spring.springboot.my_pet.entity.Department;
 import com.kirillvasilev.spring.springboot.my_pet.entity.Employee;
 import com.kirillvasilev.spring.springboot.my_pet.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,16 @@ public class EmployeeController {
     }
 
     @PostMapping("/employees")
-    public Employee addNewEmployee(@RequestBody Employee employee){
+    public Employee addNewEmployee(@RequestBody EmployeeDto employeeDto){
+        Employee employee = new Employee();
+        Department department = new Department();
+
+        department.setDepartmentName(employeeDto.getDepartmentDto().getName());
+
+        employee.setName(employeeDto.getName());
+        employee.setDepartment(department);
+
+
         employeeService.saveEmployee(employee);
         return employee;
     }

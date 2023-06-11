@@ -25,7 +25,9 @@ public class DepartmentController {
     }
 
     @PostMapping("/departments")
-    public Department addNewDepartment(@RequestBody Department department){
+    public Department addNewDepartment(@RequestBody DepartmentDto departmentDto){
+        Department department = new Department();
+        department.setDepartmentName(departmentDto.getName());
         departmentService.saveDepartment(department);
         return department;
     }
