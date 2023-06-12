@@ -5,6 +5,7 @@ import com.kirillvasilev.spring.springboot.my_pet.dto.ClientDto;
 import com.kirillvasilev.spring.springboot.my_pet.dto.DepartmentDto;
 import com.kirillvasilev.spring.springboot.my_pet.dto.EmployeeDto;
 import com.kirillvasilev.spring.springboot.my_pet.entity.Client;
+import com.kirillvasilev.spring.springboot.my_pet.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,7 +46,7 @@ public class ClientServiceImpl implements ClientService {
                     EmployeeDto employeeDto = new EmployeeDto(cli.getEmployee().getId(), cli.getEmployee().getName(), departmentDto);
                     return new ClientDto(cli.getId(), cli.getName(), employeeDto);
                 })
-                .orElseThrow();
+                .orElseThrow(()-> new NotFoundException("Id not found"));
 
     }
 

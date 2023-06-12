@@ -3,6 +3,7 @@ package com.kirillvasilev.spring.springboot.my_pet.service;
 import com.kirillvasilev.spring.springboot.my_pet.dao.DepartmentRepository;
 import com.kirillvasilev.spring.springboot.my_pet.dto.DepartmentDto;
 import com.kirillvasilev.spring.springboot.my_pet.entity.Department;
+import com.kirillvasilev.spring.springboot.my_pet.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,11 +35,15 @@ public class DepartmentServiceImpl implements DepartmentService{
     public DepartmentDto getDepartment(int id) {
         return departmentRepository.findById(id)
                 .map(dep-> new DepartmentDto(dep.getId(), dep.getDepartmentName()))
-                .orElseThrow();
+                .orElseThrow(()-> new NotFoundException("Id not found"));
     }
 
     @Override
     public void deleteDepartment(int id) {
         departmentRepository.deleteById(id);
+    }
+    public Department findByDepartmentName(String name){
+        Department department = departmentRepository.findByDepartmentName(name);
+        return department;
     }
 }

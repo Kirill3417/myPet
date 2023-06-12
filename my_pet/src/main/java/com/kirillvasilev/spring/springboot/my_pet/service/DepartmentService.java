@@ -10,4 +10,5 @@ public interface DepartmentService {
     public void saveDepartment(Department department);
     public DepartmentDto getDepartment(int id);
     public void deleteDepartment(int id);
+    public Department findByDepartmentName(String name);
 }

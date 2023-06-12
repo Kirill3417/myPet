@@ -4,6 +4,7 @@ import com.kirillvasilev.spring.springboot.my_pet.dao.EmployeeRepository;
 import com.kirillvasilev.spring.springboot.my_pet.dto.DepartmentDto;
 import com.kirillvasilev.spring.springboot.my_pet.dto.EmployeeDto;
 import com.kirillvasilev.spring.springboot.my_pet.entity.Employee;
+import com.kirillvasilev.spring.springboot.my_pet.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,11 +40,15 @@ public class EmployeeServiceImpl implements EmployeeService {
                     DepartmentDto departmentDto = new DepartmentDto(emp.getDepartment().getId(), emp.getDepartment().getDepartmentName());
                     return new EmployeeDto(emp.getId(), emp.getName(), departmentDto);
                 })
-                .orElseThrow();
+                .orElseThrow(()-> new NotFoundException("Id not found"));
     }
 
     @Override
     public void deleteEmployee(int id) {
         employeeRepository.deleteById(id);
+    }
+    public Employee findByName(String name){
+        Employee employee = employeeRepository.findByName(name);
+        return employee;
     }
 }
