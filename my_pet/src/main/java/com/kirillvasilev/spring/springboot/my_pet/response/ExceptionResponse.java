@@ -8,6 +8,4 @@ import lombok.*;
 public class ExceptionResponse {
     String message;
 
-    public ExceptionResponse() {
-    }
 }

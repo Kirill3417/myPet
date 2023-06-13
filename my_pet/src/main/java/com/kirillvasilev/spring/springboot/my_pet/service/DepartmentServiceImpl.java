@@ -35,7 +35,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Department updateDepartment(DepartmentDto departmentDto) {
-        Department department = departmentService.findByDepartmentName(departmentDto.getName()).orElseThrow(() -> new NotFoundException("Id not found"));
+        Department department = departmentService.findByDepartmentName(departmentDto.getName())
+                .orElseThrow(() -> new NotFoundException("Department with this name is not found, please choose another department"));
         department.setDepartmentName(departmentDto.getName());
         departmentRepository.save(department);
         return department;
@@ -45,7 +46,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     public DepartmentDto getDepartment(int id) {
         return departmentRepository.findById(id)
                 .map(dep -> new DepartmentDto(dep.getId(), dep.getDepartmentName()))
-                .orElseThrow(() -> new NotFoundException("Id not found"));
+                .orElseThrow(() -> new NotFoundException("Department with this id is not found, please choose another department"));
     }
 
     @Override

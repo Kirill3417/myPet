@@ -35,9 +35,10 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client saveClient(ClientDto clientDto) {
         Client client = new Client();
-        Employee employee = employeeService.findByName(clientDto.getEmployee().getName()).orElseThrow(() -> new NotFoundException("Not found"));
+        Employee employee = employeeService.findByName(clientDto.getEmployee().getName())
+                .orElseThrow(() -> new NotFoundException("Employee with this name is not found, please choose another employee"));
         Department department = departmentService.findByDepartmentName(clientDto.getEmployee().getDepartmentDto().getName())
-                .orElseThrow(() -> new NotFoundException("Not found"));
+                .orElseThrow(() -> new NotFoundException("Department with this name is not found, please choose another department"));
 
         employee.setDepartment(department);
         client.setEmployee(employee);
@@ -49,10 +50,12 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client updateClient(ClientDto clientDto) {
-        Client client = clientRepository.findById(clientDto.getId()).orElseThrow(() -> new NotFoundException("Not found"));
-        Employee employee = employeeService.findByName(clientDto.getEmployee().getName()).orElseThrow(() -> new NotFoundException("Not found"));
+        Client client = clientRepository.findById(clientDto.getId())
+                .orElseThrow(() -> new NotFoundException("Client with this name is not found, please choose another client"));
+        Employee employee = employeeService.findByName(clientDto.getEmployee().getName())
+                .orElseThrow(() -> new NotFoundException("Employee with this name is not found, please choose another employee"));
         Department department = departmentService.findByDepartmentName(clientDto.getEmployee().getDepartmentDto().getName())
-                .orElseThrow(() -> new NotFoundException("Not found"));
+                .orElseThrow(() -> new NotFoundException("Department with this name is not found, please choose another department"));
 
         employee.setDepartment(department);
         client.setEmployee(employee);
@@ -70,7 +73,7 @@ public class ClientServiceImpl implements ClientService {
                     EmployeeDto employeeDto = new EmployeeDto(cli.getEmployee().getId(), cli.getEmployee().getName(), departmentDto);
                     return new ClientDto(cli.getId(), cli.getName(), employeeDto);
                 })
-                .orElseThrow(() -> new NotFoundException("Id not found"));
+                .orElseThrow(() -> new NotFoundException("Client with this id is not found, please choose another client"));
 
     }
 

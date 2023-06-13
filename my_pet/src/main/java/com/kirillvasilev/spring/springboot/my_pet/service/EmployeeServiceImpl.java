@@ -32,7 +32,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee saveEmployee(EmployeeDto employeeDto) {
         Employee employee = new Employee();
-        Department department = departmentService.findByDepartmentName(employeeDto.getDepartmentDto().getName()).orElseThrow(() -> new NotFoundException("Id not found"));
+        Department department = departmentService.findByDepartmentName(employeeDto.getDepartmentDto().getName())
+                .orElseThrow(() -> new NotFoundException("Id not found"));
 
         employee.setDepartment(department);
         employee.setName(employeeDto.getName());
@@ -43,8 +44,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee updateEmployee(EmployeeDto employeeDto) {
-        Employee employee = employeeRepository.findById(employeeDto.getId()).orElseThrow(() -> new NotFoundException("Id not found"));
-        Department department = departmentService.findByDepartmentName(employeeDto.getDepartmentDto().getName()).orElseThrow(() -> new NotFoundException("Id not found"));
+        Employee employee = employeeRepository.findById(employeeDto.getId())
+                .orElseThrow(() -> new NotFoundException("Employee with this id is not found, please choose another employee"));
+        Department department = departmentService.findByDepartmentName(employeeDto.getDepartmentDto().getName())
+                .orElseThrow(() -> new NotFoundException("Department with this name is not found, please choose another department"));
 
         employee.setDepartment(department);
         employee.setName(employeeDto.getName());
@@ -61,7 +64,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                     DepartmentDto departmentDto = new DepartmentDto(emp.getDepartment().getId(), emp.getDepartment().getDepartmentName());
                     return new EmployeeDto(emp.getId(), emp.getName(), departmentDto);
                 })
-                .orElseThrow(() -> new NotFoundException("Id not found"));
+                .orElseThrow(() -> new NotFoundException("Employee with this id is not found, please choose another employee"));
     }
 
     @Override
