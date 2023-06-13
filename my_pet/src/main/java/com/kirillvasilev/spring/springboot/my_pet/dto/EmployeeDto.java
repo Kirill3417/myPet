@@ -6,8 +6,8 @@ import lombok.Value;
 @Value
 public class EmployeeDto {
 
-     int id;
-     String name;
-     DepartmentDto departmentDto;
+    int id;
+    String name;
+    DepartmentDto departmentDto;
 
 }

@@ -6,9 +6,14 @@ import com.kirillvasilev.spring.springboot.my_pet.entity.Department;
 
 import java.util.List;
 
-public interface ClientService{
-    public List<ClientDto> getAllClients();
-    public void saveClient(Client client);
-    public ClientDto getClient(int id);
-    public void deleteClient(int id);
+public interface ClientService {
+    List<ClientDto> getAllClients();
+
+    Client saveClient(ClientDto clientDto);
+
+    Client updateClient(ClientDto clientDto);
+
+    ClientDto getClient(int id);
+
+    void deleteClient(int id);
 }

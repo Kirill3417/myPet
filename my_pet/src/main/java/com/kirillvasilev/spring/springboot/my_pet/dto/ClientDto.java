@@ -6,10 +6,10 @@ import lombok.Value;
 @Value
 public class ClientDto {
 
-     int id;
+    int id;
 
-     String name;
+    String name;
 
-     EmployeeDto employee;
+    EmployeeDto employee;
 
 }

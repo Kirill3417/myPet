@@ -4,6 +4,6 @@ import lombok.Value;
 
 @Value
 public class DepartmentDto {
-     int id;
-     String name;
+    int id;
+    String name;
 }

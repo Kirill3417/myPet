@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class DefaultAdvice {
     @ExceptionHandler(NotFoundException.class)
-        public ResponseEntity<ExceptionResponse> handleException(NotFoundException e) {
+    public ResponseEntity<ExceptionResponse> handleException(NotFoundException e) {
         ExceptionResponse exceptionResponse = new ExceptionResponse(e.getMessage());
         return new ResponseEntity<>(exceptionResponse, HttpStatus.OK);
     }

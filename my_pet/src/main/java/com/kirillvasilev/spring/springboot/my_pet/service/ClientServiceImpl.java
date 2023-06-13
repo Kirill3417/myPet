@@ -5,27 +5,27 @@ import com.kirillvasilev.spring.springboot.my_pet.dto.ClientDto;
 import com.kirillvasilev.spring.springboot.my_pet.dto.DepartmentDto;
 import com.kirillvasilev.spring.springboot.my_pet.dto.EmployeeDto;
 import com.kirillvasilev.spring.springboot.my_pet.entity.Client;
+import com.kirillvasilev.spring.springboot.my_pet.entity.Department;
+import com.kirillvasilev.spring.springboot.my_pet.entity.Employee;
 import com.kirillvasilev.spring.springboot.my_pet.exception.NotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class ClientServiceImpl implements ClientService {
 
-    private ClientRepository clientRepository;
-
-    @Autowired
-    public ClientServiceImpl(ClientRepository clientRepository) {
-        this.clientRepository = clientRepository;
-    }
+    private final ClientRepository clientRepository;
+    private final EmployeeService employeeService;
+    private final DepartmentService departmentService;
 
     @Override
     public List<ClientDto> getAllClients() {
         return clientRepository.findAll().stream()
-                .map(cli-> {
+                .map(cli -> {
                     DepartmentDto departmentDto = new DepartmentDto(cli.getEmployee().getDepartment().getId(), cli.getEmployee().getDepartment().getDepartmentName());
                     EmployeeDto employeeDto = new EmployeeDto(cli.getEmployee().getId(), cli.getEmployee().getName(), departmentDto);
                     return new ClientDto(cli.getId(), cli.getName(), employeeDto);
@@ -33,9 +33,33 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public void saveClient(Client client) {
-        clientRepository.save(client);
+    public Client saveClient(ClientDto clientDto) {
+        Client client = new Client();
+        Employee employee = employeeService.findByName(clientDto.getEmployee().getName()).orElseThrow(() -> new NotFoundException("Not found"));
+        Department department = departmentService.findByDepartmentName(clientDto.getEmployee().getDepartmentDto().getName())
+                .orElseThrow(() -> new NotFoundException("Not found"));
 
+        employee.setDepartment(department);
+        client.setEmployee(employee);
+        client.setName(clientDto.getName());
+
+        clientRepository.save(client);
+        return client;
+    }
+
+    @Override
+    public Client updateClient(ClientDto clientDto) {
+        Client client = clientRepository.findById(clientDto.getId()).orElseThrow(() -> new NotFoundException("Not found"));
+        Employee employee = employeeService.findByName(clientDto.getEmployee().getName()).orElseThrow(() -> new NotFoundException("Not found"));
+        Department department = departmentService.findByDepartmentName(clientDto.getEmployee().getDepartmentDto().getName())
+                .orElseThrow(() -> new NotFoundException("Not found"));
+
+        employee.setDepartment(department);
+        client.setEmployee(employee);
+        client.setName(clientDto.getName());
+
+        clientRepository.save(client);
+        return client;
     }
 
     @Override
@@ -46,7 +70,7 @@ public class ClientServiceImpl implements ClientService {
                     EmployeeDto employeeDto = new EmployeeDto(cli.getEmployee().getId(), cli.getEmployee().getName(), departmentDto);
                     return new ClientDto(cli.getId(), cli.getName(), employeeDto);
                 })
-                .orElseThrow(()-> new NotFoundException("Id not found"));
+                .orElseThrow(() -> new NotFoundException("Id not found"));
 
     }
 
